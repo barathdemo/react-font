@@ -5,20 +5,21 @@ phases:
     commands:
       - echo Installing NVM and Node.js
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-      - export NVM_DIR="$HOME/.nvm"  # Set the NVM directory environment variable
-      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # Source nvm to make it available
-      - nvm install v14.10.0  # Install Node.js v14.10.0
-      - nvm use v14.10.0  # Use Node.js v14.10.0
-      - node --version  # Verify Node.js version
-      - npm --version  # Verify npm version
+      # Explicitly source the NVM environment variables into the current shell
+      - export NVM_DIR="$HOME/.nvm"
+      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # Source nvm
+      - nvm install v14.10.0  # Install Node.js version 14.10.0
+      - nvm use v14.10.0  # Use Node.js version 14.10.0
+      - node --version  # Check Node.js version
+      - npm --version  # Check npm version
   build:
     commands:
       - echo Build started on `date`
-      - npm install  # Install dependencies
-      - npm run build  # Run the build
+      - npm install  # Install project dependencies
+      - npm run build  # Run the build command
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - "**/*"  # Include all files in the artifact for later use
+    - "**/*"  # Include all files in the artifact
