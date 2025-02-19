@@ -5,12 +5,14 @@ phases:
     commands:
       - echo Installing NVM and Node.js
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-      - export NVM_DIR="$HOME/.nvm"  # Set the NVM_DIR environment variable
-      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # Source nvm to make it available in the shell
+      # Manually source the nvm script in the current shell
+      - export NVM_DIR="$HOME/.nvm"
+      - echo "Source NVM into the current shell"
+      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # Source nvm for the current shell session
       - nvm install v14.10.0  # Install Node.js v14.10.0
-      - nvm use v14.10.0  # Use Node.js v14.10.0
-      - node --version  # Verify Node.js version
-      - npm --version  # Verify npm version
+      - nvm use v14.10.0  # Set to use Node.js v14.10.0
+      - node --version  # Check Node.js version
+      - npm --version  # Check npm version
   build:
     commands:
       - echo Build started on `date`
