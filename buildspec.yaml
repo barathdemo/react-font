@@ -3,48 +3,35 @@ version: 0.2
 phases:
   install:
     commands:
-      # Installing NGINX and updating OS packages
-      - echo "Updating OS and installing NGINX"
-      - sudo apt-get update -y
-      - sudo apt-get install -y nginx
-      - echo "NGINX installed"
-      
-      # Install NVM and Node.js using the NVM installation script
-      - echo "Installing NVM"
+      - echo "Installing dependencies"
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-      # Setting up NVM environment in the current shell session
+      # Sourcing nvm in the current shell session
       - export NVM_DIR="$HOME/.nvm"
-      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # This loads nvm
-      - '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'  # This loads nvm bash completion
-      - echo "NVM installed"
-
-      # Install Node.js v14.10.0 using NVM
-      - nvm install v14.10.0
-      - nvm use v14.10.0
-      - node --version  # Verify the installed version of Node.js
-      - npm --version  # Verify the installed version of npm
+      - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'  # Load nvm
+      - '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'  # Load nvm bash completion
+      - echo "Installing Node.js version 14"
+      - nvm install 14  # You can change this to a specific version (e.g., 14.10.0)
+      - nvm use 14  # Use Node.js version 14
+      - node --version  # Verify Node.js version
+      - npm --version  # Verify npm version
+      - echo "Dependencies installed"
 
   build:
     commands:
-      # Run npm install to install project dependencies
       - echo "Running npm install"
-      - npm install
-      # Run the build script (assuming you have a build script defined in package.json)
+      - npm install  # Install project dependencies
       - echo "Running npm run build"
-      - npm run build
+      - npm run build  # Run the build script defined in package.json
 
   post_build:
     commands:
-      # Optionally, configure NGINX or other post-build steps (e.g., copying files, restart services)
-      - echo "Post build tasks"
-      - sudo cp -r ./dist/* /var/www/html/  # Example, change according to your build directory
-      - sudo systemctl restart nginx  # Restart NGINX to apply any changes if needed
+      - echo "Post-build tasks"
+      - echo "Build completed successfully!"
 
 artifacts:
   files:
-    - '**/*'  # Include all files in the artifact to be passed to the next stage or saved
+    - '**/*'  # Include all files, you can adjust it to specific files/folders like dist/* if you want only build artifacts
 
 cache:
   paths:
-    - '/root/.nvm/**/*'
-    - 'node_modules/**/*'
+    - 'node_modules/**/*'  # Cache the node_modules directory to speed up future builds
