@@ -6,7 +6,8 @@ phases:
       - echo Installing NVM and Node.js
       - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
       - export NVM_DIR="$HOME/.nvm"
-      - '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'  # This sources NVM
+      # Ensure that nvm is sourced correctly
+      - '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' # Sources NVM into the shell
       - nvm install v14.10.0
       - nvm use v14.10.0
       - node --version
