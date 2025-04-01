@@ -30,14 +30,14 @@ pipeline {
         stage('Docker Ps') {
             steps {
                 script {
-                    sh ' docker pa -a'
+                    sh 'docker ps -a'
                 }
             }
         }
          stage('Docker ContainerRun') {
             steps {
                 script {
-                    sh ' docker run -d -p 8090:80 barath2707/docker:$BUILD_NUMBER'
+                    sh 'docker run -d -p 8092:80 barath2707/docker:$BUILD_NUMBER'
                 }
             }
         }
