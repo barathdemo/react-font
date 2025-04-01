@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                 git url: 'https://github.com/barathdemo/react-font.git', credentialsId: 'github-credentials', branch: 'main'
+                 git branch: 'main', url: 'https://github.com/barathdemo/react-font.git'
             }
         }
         stage('Docker Build') {
