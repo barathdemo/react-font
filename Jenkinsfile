@@ -20,5 +20,26 @@ pipeline {
                 }
             }
         }
+         stage('Docker Pull') {
+            steps {
+                script {
+                    sh 'docker pull barath2707/docker:$BUILD_NUMBER'
+                }
+            }
+        }
+        stage('Docker Ps') {
+            steps {
+                script {
+                    sh ' docker pa -a'
+                }
+            }
+        }
+         stage('Docker ContainerRun') {
+            steps {
+                script {
+                    sh ' docker run -d -p 8090:80 barath2707/docker:$BUILD_NUMBER'
+                }
+            }
+        }
     }
 }
